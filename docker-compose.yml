@@ -1,0 +1,72 @@
+services:
+
+  rabbitmq:
+    image: "rabbitmq:3.8.0-management"
+    container_name: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: [ "CMD", "rabbitmqadmin", "list", "queues" ]
+      start_period: "5s"
+  mockserver:
+    image: "mockserver/mockserver"
+    container_name: "mockserver"
+    ports:
+      - "2090:2090"
+    environment:
+      MOCKSERVER_SERVER_PORT: "2090"
+      MOCKSERVER_LOG_LEVEL: "DEBUG"
+      MOCKSERVER_INITIALIZATION_JSON_PATH: "/opt/mock-server-initialization.json"
+    volumes:
+      - "./mock-server/initialization.json:/opt/mock-server-initialization.json"
+  eventstoredb:
+    image: "eventstore/eventstore:21.10.7-buster-slim"
+    container_name: "esdb"
+    ports:
+      - "2113:2113"
+    command: [ "--insecure", "--run-projections=All"]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:2113/health/live" ]
+      start_period: "5s"
+  payments:
+    build:
+      context: "${WALLETERA_DIR}/payments/"
+      no_cache: true
+    container_name: "payments"
+    ports:
+      - "3880:3880"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      eventstoredb:
+        condition: service_healthy
+    environment:
+      EVENTSTOREDB_URL: "esdb://eventstoredb:2113?tls=false"
+      HTTP_SERVER_PORT: 3880
+      RABBITMQ_HOST: "rabbitmq"
+      RABBITMQ_PASSWORD: "guest"
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: "guest"
+  dinopay-gateway:
+    build:
+      context: "${WALLETERA_DIR}/dinopay-gateway/"
+      no_cache: true
+    container_name: "dinopay-gateway"
+    depends_on:
+      mockserver:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      eventstoredb:
+        condition: service_healthy
+      payments:
+        condition: service_started
+    environment:
+      RABBITMQ_HOST: "rabbitmq"
+      RABBITMQ_PASSWORD: "guest"
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: "guest"
+      DINOPAY_URL: "http://mockserver:2090/dinopay"
+      PAYMENTS_URL: "http://payments:3880"
+      EVENTSTOREDB_URL: "esdb://eventstoredb:2113?tls=false"
