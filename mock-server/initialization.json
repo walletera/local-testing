@@ -34,7 +34,7 @@
           "accountHolder" : "jane doe",
           "accountNumber" : "IE12BOFI90000112349876"
         },
-        "status" : "pending",
+        "status" : "confirmed",
         "customerTransactionId" : "9713ec22-cf8d-4a21-affb-719db00d7388",
         "createdAt" : "2023-07-07",
         "updatedAt" : "2023-07-07"
