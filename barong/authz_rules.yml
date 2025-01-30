@@ -1,0 +1,10 @@
+#
+# pass for whitelisted (public) routes
+# block for blacklisted routes
+#
+rules:
+  pass:
+    - /api/v2/identity
+  block:
+    - /management
+

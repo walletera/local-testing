@@ -25,7 +25,7 @@ services:
     container_name: "esdb"
     ports:
       - "2113:2113"
-    command: [ "--insecure", "--run-projections=All"]
+    command: [ "--insecure", "--run-projections=All" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:2113/health/live" ]
       start_period: "5s"
@@ -41,13 +41,17 @@ services:
         condition: service_healthy
       eventstoredb:
         condition: service_healthy
+      barong:
+        condition: service_started
     environment:
       EVENTSTOREDB_URL: "esdb://eventstoredb:2113?tls=false"
-      HTTP_SERVER_PORT: 3880
+      PUBLIC_API_HTTP_SERVER_PORT: 3880
+      PRIVATE_API_HTTP_SERVER_PORT: 3881
       RABBITMQ_HOST: "rabbitmq"
       RABBITMQ_PASSWORD: "guest"
       RABBITMQ_PORT: 5672
       RABBITMQ_USER: "guest"
+      BASE64_AUTH_PUB_KEY: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF1SUE3eWQ4WGozbE9uQ24wRkg1NwppVkdRQVdNb1RnZVpIU0U3VFIza2t4Y3lpR2ZPUVJUb3pFaTVrMWxRYWwvRUQwVDZEemIxVjhFNElNZEJQeGt0Ci8rQmNXRjdDTEE5bEQzOFNzdXBDSlllZW8wRGw1VlNSRGtqVzBHYm5XVFdwazJna2JVV0VwY3BNVXlCNWh3WDMKRndQTmdXcVlod2ZWdzhlOERuV2N6TkltZ1lkMVkwTE0wZzZ3TGdIZkdqZjZLLzV5S3V2NDZBWVhFTEJaMWprZwpWTTNyZXliK2xYa3Y3OXVsVkprUGFhN1NaUllsMmpRY0FCak1aTzJLVmtTTEpIWEdzVTRFUGJXRTJuV0tBVXpsCkh4bnRzcU12SDVQbXNQbEFRWGF0MG9rM2ViVVFncHI2RmJQbFZlRks1bjlJd2pJTW95ZThWWVcvSFZJRURURmMKYlFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=="
   dinopay-gateway:
     build:
       context: "${WALLETERA_DIR}/dinopay-gateway/"
@@ -68,5 +72,92 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USER: "guest"
       DINOPAY_URL: "http://mockserver:2090/dinopay"
-      PAYMENTS_URL: "http://payments:3880"
+      PAYMENTS_URL: "http://payments:3881"
       EVENTSTOREDB_URL: "esdb://eventstoredb:2113?tls=false"
+  envoy:
+    container_name: envoy
+    image: envoyproxy/envoy:v1.9.0
+    command:
+      - /usr/local/bin/envoy
+      - --v2-config-only
+      - -l
+      - info
+      - -c
+      - /etc/envoy/envoy.yaml
+    ports:
+      - "3099:3099"
+      - "3999:3999"
+    volumes:
+      - "./envoy/envoy.yaml:/etc/envoy/envoy.yaml"
+      - "./envoyaccesslog:/var/log"
+    depends_on:
+      barong:
+        condition: service_started
+      payments:
+        condition: service_started
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "abc123"
+  vault:
+    image: vault:1.3.4
+    command: [ 'server', '-dev' ]
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_TOKEN: "changeme"
+      VAULT_DEV_ROOT_TOKEN_ID: "changeme"
+      VAULT_ADDR: "http://127.0.0.1:8200"
+  redis:
+    image: redis:5
+    ports:
+      - "6379:6379"
+  barong:
+    image: rubykube/barong:2.5.21
+    ports:
+      - "8051:8051"
+    volumes:
+      - "./barong/barong.key:/secrets/barong.key"
+      - "./barong/authz_rules.yml:/home/app/config/authz_rules.yml"
+      - "./barong/seeds.yml:/home/app/config/seeds.yml"
+      - "./barong/barong.yml:/home/app/config/barong.yml"
+    environment:
+      BARONG_VAULT_TOKEN: "changeme"
+      DATABASE_HOST: "mysql"
+      DATABASE_USER: "root"
+      DATABASE_PASS: "abc123"
+      BARONG_APP_NAME: "Walletera"
+      APP_NAME: "Walletera"
+      BARONG_SESSION_NAME: "_walletera"
+      BARONG_DOMAIN: "barong.walletera.tech"
+      BARONG_SMTP_PASSWORD:
+      BARONG_SMTP_PORT: "587"
+      BARONG_SMTP_HOST: "smtp.sendgrid.net"
+      BARONG_SMTP_USER: "apikey"
+      BARONG_SENDER_EMAIL: "no-reply@letsbit.io"
+      BARONG_SENDER_NAME: "Walletera"
+      LOG_LEVEL: "info"
+      BARONG_REQUIRED_DOCS_EXPIRE: "false"
+      RAILS_ENV: "production"
+      BARONG_VAULT_ADDRESS: "https://vault:8200"
+      DISABLE_SPRING: "true"
+      SECRET_KEY_BASE: 64
+      JWT_PRIVATE_KEY_PATH: "/secrets/barong.key"
+      PORT: "8051"
+      BARONG_CAPTCHA: "recaptcha"
+      BARONG_RECAPTCHA_SECRET_KEY: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      BARONG_RECAPTCHA_SITE_KEY: "xxxxxxxxxxxxxxxxxxxxxxxx"
+      BARONG_REDIS_URL: "redis://redis:6379"
+      BARONG_EVENT_API_JWT_ALGORITHM: "RS256"
+      BARONG_EVENT_API_RABBITMQ_HOST: "rabbitmq"
+      BARONG_EVENT_API_RABBITMQ_PORT: "5672"
+      BARONG_EVENT_API_RABBITMQ_USERNAME: "guest"
+      BARONG_EVENT_API_RABBITMQ_PASSWORD: "guest"
+      BARONG_CSRF_PROTECTION: "false"
+    depends_on:
+      - mysql
+      - vault
+      - redis
+      - rabbitmq

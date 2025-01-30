@@ -1,0 +1,45 @@
+# List of Barong administrators.
+#
+# Other parameters that you can set here can be found in Account,
+# Profile and Phone models (e.g. app/models/account.rb...); all the
+# model properties are listed at the very bottom of this models files.
+#
+# Note: email is the only required field here.
+users:
+  - email: federicoamoya@gmail.com
+    password: 0lDHd9ufs9t@
+    role: superadmin
+    state: active
+    level: 3
+    uid: "c481baa9-d7af-430d-ae40-090e14b5c19f"
+
+
+levels:
+  - key: email
+    value: verified
+    description: 'User clicked on the confirmation link'
+  - key: profile
+    value: verified
+    description: 'User entered profile information'
+  - key: identity
+    value: verified
+    description: 'User identity documents have been verified'
+
+restrictions:
+  - { category: maintenance, scope: all, value: all, state: disabled }
+
+permissions:
+  # SUPER ADMIN has an access to the whole system without any limits
+  # so we can just grant him access to /api/*
+  - { role: superadmin, verb: all, path: api/v2, action: accept }
+
+  - { role: superadmin, verb: post, path: api/v2, action: audit }
+  - { role: superadmin, verb: put, path: api/v2, action: audit }
+  - { role: superadmin, verb: delete, path: api/v2, action: audit }
+
+  - { role: superadmin, verb: all, path: api/v1, action: accept }
+
+  - { role: superadmin, verb: post, path: api/v1, action: audit }
+  - { role: superadmin, verb: put, path: api/v1, action: audit }
+  - { role: superadmin, verb: delete, path: api/v1, action: audit }
+
