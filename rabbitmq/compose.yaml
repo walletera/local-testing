@@ -1,0 +1,10 @@
+services:
+  rabbitmq:
+    image: "rabbitmq:3.8.0-management"
+    container_name: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: [ "CMD", "rabbitmqadmin", "list", "queues" ]
+      start_period: "5s"

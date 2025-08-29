@@ -1,0 +1,10 @@
+services:
+  eventstoredb:
+    image: "eventstore/eventstore:21.10.7-buster-slim"
+    container_name: "esdb"
+    ports:
+      - "2113:2113"
+    command: [ "--insecure", "--run-projections=All" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:2113/health/live" ]
+      start_period: "5s"

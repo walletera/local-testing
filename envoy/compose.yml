@@ -1,0 +1,22 @@
+services:
+  envoy:
+    container_name: envoy
+    image: envoyproxy/envoy:v1.9.0
+    command:
+      - /usr/local/bin/envoy
+      - --v2-config-only
+      - -l
+      - info
+      - -c
+      - /etc/envoy/envoy.yaml
+    ports:
+      - "3099:3099"
+      - "3999:3999"
+    volumes:
+      - "./envoy.yaml:/etc/envoy/envoy.yaml"
+      - "../envoyaccesslog:/var/log"
+    depends_on:
+      barong:
+        condition: service_started
+      payments:
+        condition: service_started

@@ -1,0 +1,12 @@
+services:
+  mockserver:
+    image: "mockserver/mockserver"
+    container_name: "mockserver"
+    ports:
+      - "2090:2090"
+    environment:
+      MOCKSERVER_SERVER_PORT: "2090"
+      MOCKSERVER_LOG_LEVEL: "DEBUG"
+      MOCKSERVER_INITIALIZATION_JSON_PATH: "/opt/mock-server-initialization.json"
+    volumes:
+      - "./initialization.json:/opt/mock-server-initialization.json"

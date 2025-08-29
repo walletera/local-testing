@@ -1,5 +1,49 @@
 
-include:
-  - ../rabbitmq/compose.yml
-
 services:
+  barong:
+    image: rubykube/barong:2.5.21
+    ports:
+      - "8051:8051"
+    volumes:
+      - "./barong.key:/secrets/barong.key"
+      - "./authz_rules.yml:/home/app/config/authz_rules.yml"
+      - "./seeds.yml:/home/app/config/seeds.yml"
+      - "./barong.yml:/home/app/config/barong.yml"
+    environment:
+      BARONG_VAULT_TOKEN: "changeme"
+      DATABASE_HOST: "mysql"
+      DATABASE_USER: "root"
+      DATABASE_PASS: "abc123"
+      BARONG_APP_NAME: "Walletera"
+      APP_NAME: "Walletera"
+      BARONG_SESSION_NAME: "_walletera"
+      BARONG_DOMAIN: "barong.walletera.tech"
+      BARONG_SMTP_PASSWORD:
+      BARONG_SMTP_PORT: "587"
+      BARONG_SMTP_HOST: "smtp.sendgrid.net"
+      BARONG_SMTP_USER: "apikey"
+      BARONG_SENDER_EMAIL: "no-reply@letsbit.io"
+      BARONG_SENDER_NAME: "Walletera"
+      LOG_LEVEL: "info"
+      BARONG_REQUIRED_DOCS_EXPIRE: "false"
+      RAILS_ENV: "production"
+      BARONG_VAULT_ADDRESS: "https://vault:8200"
+      DISABLE_SPRING: "true"
+      SECRET_KEY_BASE: 64
+      JWT_PRIVATE_KEY_PATH: "/secrets/barong.key"
+      PORT: "8051"
+      BARONG_CAPTCHA: "recaptcha"
+      BARONG_RECAPTCHA_SECRET_KEY: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      BARONG_RECAPTCHA_SITE_KEY: "xxxxxxxxxxxxxxxxxxxxxxxx"
+      BARONG_REDIS_URL: "redis://redis:6379"
+      BARONG_EVENT_API_JWT_ALGORITHM: "RS256"
+      BARONG_EVENT_API_RABBITMQ_HOST: "rabbitmq"
+      BARONG_EVENT_API_RABBITMQ_PORT: "5672"
+      BARONG_EVENT_API_RABBITMQ_USERNAME: "guest"
+      BARONG_EVENT_API_RABBITMQ_PASSWORD: "guest"
+      BARONG_CSRF_PROTECTION: "false"
+    depends_on:
+      - mysql
+      - vault
+      - redis
+      - rabbitmq

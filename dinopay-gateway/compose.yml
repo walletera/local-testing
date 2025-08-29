@@ -1,0 +1,23 @@
+services:
+  dinopay-gateway:
+    build:
+      context: "${WALLETERA_DIR}/dinopay-gateway/"
+      no_cache: true
+    container_name: "dinopay-gateway"
+    depends_on:
+      mockserver:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      eventstoredb:
+        condition: service_healthy
+      payments:
+        condition: service_started
+    environment:
+      RABBITMQ_HOST: "rabbitmq"
+      RABBITMQ_PASSWORD: "guest"
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: "guest"
+      DINOPAY_URL: "http://mockserver:2090/dinopay"
+      PAYMENTS_URL: "http://payments:3881"
+      EVENTSTOREDB_URL: "esdb://eventstoredb:2113?tls=false"
