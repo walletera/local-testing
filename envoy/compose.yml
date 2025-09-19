@@ -14,7 +14,7 @@ services:
       - "3999:3999"
     volumes:
       - "./envoy.yaml:/etc/envoy/envoy.yaml"
-      - "../envoyaccesslog:/var/log"
+      - "./envoyaccesslog:/var/log"
     depends_on:
       barong:
         condition: service_started
