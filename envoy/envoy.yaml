@@ -28,8 +28,19 @@ static_resources:
                             prefix_rewrite: "/api/v2/"
                         - match:
                             prefix: "/api/v1/payments"
+                            headers:
+                              - name: ":method"
+                                exact_match: "POST"
                           route:
                             cluster: payments
+                            prefix_rewrite: "/payments"
+                        - match:
+                            prefix: "/api/v1/payments"
+                            headers:
+                              - name: ":method"
+                                exact_match: "GET"
+                          route:
+                            cluster: payments-read-model
                             prefix_rewrite: "/payments"
                 http_filters:
                   - name: envoy.ext_authz
@@ -77,6 +88,14 @@ static_resources:
         - socket_address:
             address: payments
             port_value: 3880
+    - name: payments-read-model
+      connect_timeout: 0.25s
+      type: strict_dns
+      lb_policy: round_robin
+      hosts:
+        - socket_address:
+            address: payments-read-model
+            port_value: 4880
 admin:
   access_log_path: "/var/log/envoy-admin-access.log"
   address:

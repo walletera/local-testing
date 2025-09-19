@@ -9,3 +9,6 @@ include:
   - vault/compose.yml
   - redis/compose.yml
   - barong/compose.yml
+  - mongodb/compose.yml
+  - payments-read-model/compose.yml
+

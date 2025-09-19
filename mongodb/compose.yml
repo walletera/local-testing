@@ -1,0 +1,9 @@
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongodb/mongodb-community-server
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "show dbs" ]
+      start_period: "5s"

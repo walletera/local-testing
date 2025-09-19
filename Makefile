@@ -14,3 +14,6 @@ delete-payments-image:
 
 delete-dinopay-gateway-image:
 	docker rmi local-testing-dinopay-gateway
+
+delete-payments-read-model-image:
+	docker rmi local-testing-payments-read-model
