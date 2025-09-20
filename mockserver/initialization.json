@@ -17,28 +17,9 @@
         }
       }
     },
-    "httpResponse" : {
-      "statusCode" : 201,
-      "headers" : {
-        "content-type" : [ "application/json" ]
-      },
-      "body" : {
-        "id" : "bb17667e-daac-41f6-ada3-2c22f24caf22",
-        "amount" : 100,
-        "currency" : "USD",
-        "sourceAccount" : {
-          "accountHolder" : "john doe",
-          "accountNumber" : "IE12BOFI90000112345678"
-        },
-        "destinationAccount" : {
-          "accountHolder" : "jane doe",
-          "accountNumber" : "IE12BOFI90000112349876"
-        },
-        "status" : "confirmed",
-        "customerTransactionId" : "9713ec22-cf8d-4a21-affb-719db00d7388",
-        "createdAt" : "2023-07-07",
-        "updatedAt" : "2023-07-07"
-      }
+    "httpResponseTemplate" : {
+      "templateType": "VELOCITY",
+      "template": "{\n    \"statusCode\" : 201,\n      \"headers\" : {\n        \"content-type\" : [ \"application/json\" ]\n      },\n      \"body\" : {\n        \"id\" : \"$!uuid\",\n        \"amount\" : 100,\n        \"currency\" : \"USD\",\n        \"sourceAccount\" : {\n          \"accountHolder\" : \"john doe\",\n          \"accountNumber\" : \"IE12BOFI90000112345678\"\n        },\n        \"destinationAccount\" : {\n          \"accountHolder\" : \"jane doe\",\n          \"accountNumber\" : \"IE12BOFI90000112349876\"\n        },\n        \"status\" : \"confirmed\",\n        \"customerTransactionId\" : \"9713ec22-cf8d-4a21-affb-719db00d7388\",\n        \"createdAt\" : \"2025-09-20\",\n        \"updatedAt\" : \"2025-09-20\"\n  }\n}"
     },
     "priority" : 0,
     "timeToLive" : {
