@@ -6,8 +6,8 @@
 #
 # Note: email is the only required field here.
 users:
-  - email: federicoamoya@gmail.com
-    password: 0lDHd9ufs9t@
+  - email: superadmin@walletera.dev
+    password: changeme
     role: superadmin
     state: active
     level: 3
