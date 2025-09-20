@@ -22,10 +22,13 @@ static_resources:
                         - "*"
                       routes:
                         - match:
-                            prefix: "/api/v1/auth"
+                            prefix: "/api/v1/auth/identity/sessions"
                           route:
                             cluster: barong
-                            prefix_rewrite: "/api/v2/"
+                            prefix_rewrite: "/api/v2/identity/sessions"
+                          per_filter_config:
+                            envoy.ext_authz:
+                              disabled: true
                         - match:
                             prefix: "/api/v1/payments"
                             headers:
