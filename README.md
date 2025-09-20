@@ -26,20 +26,11 @@ This repository provides a local development and testing environment for the Wal
 make start
 ```
 
-
 This command will:
 - Bring up all Docker Compose services
 - Configure Barong (authentication service) database and seed it with initial data
 
-2. **Stop Services:**
-
-```shell script
-make stop
-```
-
-This stops and removes all containers, but keeps Docker images and volumes for faster restarts.
-
-3. **Run end-to-end tests:**
+2. **Run end-to-end tests:**
 
 ```shell script
 export BASIC_AUTH_USERNAME=superadmin@walletera.dev
@@ -51,15 +42,12 @@ This will:
 - Build the Go test runner
 - Execute end-to-end tests against the running services
 
-4. **Clean Up Docker Images (Optional):**
-
-   To remove specific service images, use:
+3. **Stop Services:**
 
 ```shell script
-make delete-payments-image
-   make delete-dinopay-gateway-image
-   make delete-payments-read-model-image
+make stop
 ```
+This stops and removes all containers, but keeps Docker images and volumes for faster restarts.
 
 ## Environment Configuration
 
