@@ -7,7 +7,7 @@
 # Note: email is the only required field here.
 users:
   - email: superadmin@walletera.dev
-    password: changeme
+    password: aBB^kBg4
     role: superadmin
     state: active
     level: 3
