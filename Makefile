@@ -31,7 +31,7 @@ configure-barong: compose-up
 start: configure-barong
 
 stop:
-	$(DC) down
+	$(DC) down --volumes
 
 delete-payments-image:
 	docker rmi $(PAYMENTS_IMAGE)
