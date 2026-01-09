@@ -45,6 +45,11 @@ static_resources:
                           route:
                             cluster: payments-read-model
                             prefix_rewrite: "/payments"
+                        - match:
+                            prefix: "/api/v1/accounts"
+                          route:
+                            cluster: accounts
+                            prefix_rewrite: "/accounts"
                 http_filters:
                   - name: envoy.ext_authz
                     config:
@@ -99,6 +104,14 @@ static_resources:
         - socket_address:
             address: payments-read-model
             port_value: 4880
+    - name: accounts
+      connect_timeout: 0.25s
+      type: strict_dns
+      lb_policy: round_robin
+      hosts:
+        - socket_address:
+            address: accounts
+            port_value: 3380
 admin:
   access_log_path: "/var/log/envoy-admin-access.log"
   address:

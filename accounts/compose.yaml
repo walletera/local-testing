@@ -1,0 +1,19 @@
+services:
+  accounts:
+    container_name: "accounts"
+    build:
+      context: "${WALLETERA_DIR}/accounts/"
+      no_cache: true
+    ports:
+      - "3380:3380"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      eventstoredb:
+        condition: service_healthy
+      barong:
+        condition: service_started
+    environment:
+      PUBLIC_API_HTTP_SERVER_PORT: 3380
+      BASE64_AUTH_PUB_KEY: "APUBKEY"
+      MONGODB_URL: "mongodb://mongodb:27017/?retryWrites=true&w=majority"

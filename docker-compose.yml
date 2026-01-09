@@ -3,6 +3,7 @@ include:
   - mockserver/compose.yml
   - eventstoredb/compose.yml
   - payments/compose.yml
+  - accounts/compose.yaml
   - dinopay-gateway/compose.yml
   - envoy/compose.yml
   - mysql/compose.yml
@@ -11,4 +12,3 @@ include:
   - barong/compose.yml
   - mongodb/compose.yml
   - payments-read-model/compose.yml
-

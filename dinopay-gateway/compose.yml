@@ -4,6 +4,8 @@ services:
       context: "${WALLETERA_DIR}/dinopay-gateway/"
       no_cache: true
     container_name: "dinopay-gateway"
+    ports:
+      - "8686:8686"
     depends_on:
       mockserver:
         condition: service_started
@@ -14,10 +16,12 @@ services:
       payments:
         condition: service_started
     environment:
+      WEBHOOK_PORT: 8686
       RABBITMQ_HOST: "rabbitmq"
       RABBITMQ_PASSWORD: "guest"
       RABBITMQ_PORT: 5672
       RABBITMQ_USER: "guest"
       DINOPAY_URL: "http://mockserver:2090/dinopay"
+      ACCOUNTS_URL: "http://accounts:3380"
       PAYMENTS_URL: "http://payments:3881"
       EVENTSTOREDB_URL: "esdb://eventstoredb:2113?tls=false"
