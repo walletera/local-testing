@@ -173,7 +173,8 @@ docker-compose logs payments dinopay-gateway payments-read-model
 ```shell
 export BASIC_AUTH_USERNAME=superadmin@walletera.dev
 export BASIC_AUTH_PASSWORD=aBB^kBg4
-make run-tests
+make run-dinopay-inbound-succeed-tests
+make run-dinopay-outbound-succeed-tests
 ```
 
 This will:
