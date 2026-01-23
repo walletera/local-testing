@@ -47,8 +47,11 @@ delete-images: delete-payments-image delete-dinopay-gateway-image delete-payment
 build-test-runner:
 	cd $(TESTS_DIR) && go build -o bin/runner cmd/runner.go
 
-run-tests: build-test-runner
+run-dinopay-outbound-succeed-tests: build-test-runner
 	$(RUNNER_BIN) run constant dinopayOutboundSucceed --max-duration 10s --rate 1/s
+
+run-dinopay-inbound-succeed-tests: build-test-runner
+	$(RUNNER_BIN) run constant dinopayInboundSucceed --max-duration 10s --rate 1/s
 
 clean:
 	rm -rf $(TESTS_DIR)/bin/runner

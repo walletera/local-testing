@@ -60,6 +60,11 @@ func createAccount(t *testing.T, sessionCookie *http.Cookie) {
 
 	defer resp.Body.Close()
 
+	if resp.StatusCode == http.StatusConflict {
+		t.Log("account already exists, skipping account creation")
+		return
+	}
+
 	if resp.StatusCode != http.StatusCreated {
 		t.Fatalf("failed creating account: status code %d", resp.StatusCode)
 	}
