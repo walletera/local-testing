@@ -1,10 +1,9 @@
 services:
   envoy:
     container_name: envoy
-    image: envoyproxy/envoy:v1.9.0
+    image: envoyproxy/envoy:v1.37-latest
     command:
       - /usr/local/bin/envoy
-      - --v2-config-only
       - -l
       - info
       - -c
@@ -14,7 +13,6 @@ services:
       - "3999:3999"
     volumes:
       - "./envoy.yaml:/etc/envoy/envoy.yaml"
-      - "./envoyaccesslog:/var/log"
     depends_on:
       barong:
         condition: service_started
