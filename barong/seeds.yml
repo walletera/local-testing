@@ -7,12 +7,15 @@
 # Note: email is the only required field here.
 users:
   - email: superadmin@walletera.dev
-    password: aBB^kBg4
     role: superadmin
     state: active
     level: 3
     uid: "c481baa9-d7af-430d-ae40-090e14b5c19f"
-
+  - email: johndoe@moonbank.com
+    role: customer
+    state: active
+    level: 3
+    uid: "bf1c1ab8-ecd9-4bf9-8706-bfeddbc3a51c"
 
 levels:
   - key: email
@@ -43,3 +46,15 @@ permissions:
   - { role: superadmin, verb: put, path: api/v1, action: audit }
   - { role: superadmin, verb: delete, path: api/v1, action: audit }
 
+  # CUSTOMER
+  # Manage api_keys
+  - { role: customer, verb: all, path: api/v1/auth/resource/otp/generate_qrcode, action: accept }
+  - { role: customer, verb: all, path: api/v1/auth/resource/otp/enable, action: accept }
+  - { role: customer, verb: all, path: api/v1/auth/resource/otp/disable, action: accept }
+  - { role: customer, verb: all, path: api/v1/auth/resource/service_accounts/api_keys, action: accept }
+  # Payments
+  - { role: customer, verb: post, path: api/v1/payments, action: accept }
+  - { role: customer, verb: get, path: api/v1/payments, action: accept }
+  # Accounts
+  - { role: customer, verb: post, path: api/v1/accounts, action: accept }
+  - { role: customer, verb: get, path: api/v1/accounts, action: accept }

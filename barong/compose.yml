@@ -2,7 +2,7 @@
 services:
   barong:
     container_name: barong
-    image: rubykube/barong:2.5.21
+    image: rubykube/barong:2.6.49
     ports:
       - "8051:8051"
     volumes:
@@ -10,6 +10,7 @@ services:
       - "./authz_rules.yml:/home/app/config/authz_rules.yml"
       - "./seeds.yml:/home/app/config/seeds.yml"
       - "./barong.yml:/home/app/config/barong.yml"
+      - "./management_api.yml:/home/app/config/management_api.yml"
     environment:
       BARONG_VAULT_TOKEN: "changeme"
       DATABASE_HOST: "mysql"
@@ -28,7 +29,7 @@ services:
       LOG_LEVEL: "info"
       BARONG_REQUIRED_DOCS_EXPIRE: "false"
       RAILS_ENV: "production"
-      BARONG_VAULT_ADDRESS: "https://vault:8200"
+      BARONG_VAULT_ADDRESS: "http://vault:8200"
       DISABLE_SPRING: "true"
       SECRET_KEY_BASE: 64
       JWT_PRIVATE_KEY_PATH: "/secrets/barong.key"
@@ -44,7 +45,11 @@ services:
       BARONG_EVENT_API_RABBITMQ_PASSWORD: "guest"
       BARONG_CSRF_PROTECTION: "false"
     depends_on:
-      - mysql
-      - vault
-      - redis
-      - rabbitmq
+      mysql:
+        condition: service_healthy
+      vault:
+        condition: service_started
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy

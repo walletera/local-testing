@@ -1,0 +1,12 @@
+keychain:
+  service-accounts-seeder:
+    algorithm: RS256
+    value: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFyYk1FUk9weGo0Z2RudlJSWjNzdwpobFBJVUpweTVSbnVTM3g5Q3NWNHZKMWJMREo4YytZTkpXQjJrU1hsMVZlMEpleWJKTm82Smtra1NlVkcrdU9GCjJDcUhZeTRqRktzYlFlbnUvRThBSENKRzF5MVEyKzlTTUxNdWxtM1pCTUJTdzhyNytBcDBvQ096VkVLejZ0UDUKaFVhSEZxbDBORHVERnJPZWZ4YTlwVUV2eUpoWndBck85WlBmS2NMSUUyL1FSQk9XQUFhSDhjY201UkpZQTJvTAptbjZKWFhRMWF6Ynl5TWVyREhrNng5OFpoNHplaURiM3ozQ1JEUTl0eHZvSHBjTzdCemg5MzBkZFhKc280bDUwCnZpaGJQa2ttWHZMOGtNUFdndWgrLzVWU0Npa3ZPWG8yVlJIUlBwTzFFTi90ZmJYcHcrVyt3Tk45N0RnczVJWDIKWFFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
+jwt: {}
+scopes:
+  write_service_accounts:
+    permitted_signers: ['service-accounts-seeder']
+    mandatory_signers: ['service-accounts-seeder']
+  read_service_accounts:
+    permitted_signers: [ 'service-accounts-seeder' ]
+    mandatory_signers: [ 'service-accounts-seeder' ]

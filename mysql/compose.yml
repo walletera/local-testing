@@ -1,8 +1,15 @@
 services:
   mysql:
     container_name: mysql
-    image: mysql:5.7
+    image: mysql:8.4
     ports:
       - "3306:3306"
+    command: --mysql-native-password=ON --authentication-policy=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: "abc123"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pabc123"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s

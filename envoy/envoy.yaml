@@ -33,6 +33,11 @@ static_resources:
                               "@type": type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.ExtAuthzPerRoute
                               disabled: true
                         - match:
+                            prefix: "/api/v1/auth/resource"
+                          route:
+                            cluster: barong
+                            prefix_rewrite: "/api/v2/resource"
+                        - match:
                             prefix: "/api/v1/payments"
                             headers:
                               - name: ":method"

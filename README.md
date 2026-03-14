@@ -61,6 +61,11 @@ This command will:
 - Bring up all Docker Compose services
 - Configure Barong (authentication service) database and seed it with initial data
 
+> [!NOTE]
+> The `make start` command will output the password of the superadmin@walletera.dev user
+> you will need that password to be able to interact with the Walletera API
+
+
 **Create a Payment**
 
 First, we need to authenticate and get a session cookie.
@@ -71,7 +76,7 @@ First, we need to authenticate and get a session cookie.
 ```shell
 curl -v --location 'http://127.0.0.1:3099/api/v1/auth/identity/sessions' \
 --form 'email="superadmin@walletera.dev"' \
---form 'password="aBB^kBg4"'
+--form 'password="{superadmin_password}"'
 ```
 Search for the set-cookie header in the response. It should look something like this:
 
