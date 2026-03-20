@@ -13,6 +13,8 @@ services:
       - "./management_api.yml:/home/app/config/management_api.yml"
     environment:
       BARONG_VAULT_TOKEN: "changeme"
+      BARONG_VAULT_ADDRESS: "http://vault:8200"
+      BARONG_VAULT_APP_NAME: "walletera"
       DATABASE_HOST: "mysql"
       DATABASE_USER: "root"
       DATABASE_PASS: "abc123"
@@ -29,7 +31,6 @@ services:
       LOG_LEVEL: "info"
       BARONG_REQUIRED_DOCS_EXPIRE: "false"
       RAILS_ENV: "production"
-      BARONG_VAULT_ADDRESS: "http://vault:8200"
       DISABLE_SPRING: "true"
       SECRET_KEY_BASE: 64
       JWT_PRIVATE_KEY_PATH: "/secrets/barong.key"

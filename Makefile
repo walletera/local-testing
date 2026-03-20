@@ -27,6 +27,13 @@ compose-up:
 
 configure-barong: compose-up
 	$(DC) exec barong bundle exec rake db:create db:migrate db:seed
+	$(DC) exec vault vault policy write barong-rails /opt/barong-rails.hcl
+	$(DC) exec vault vault policy write barong-authz /opt/barong-authz.hcl
+	$(DC) exec vault vault token create -policy=barong-rails -period=240h
+	$(DC) exec vault vault token create -policy=barong-authz -period=240h
+	$(DC) exec vault vault secrets disable secret
+	$(DC) exec vault vault secrets enable -path=secret -version=1 kv
+	$(DC) exec vault vault secrets enable totp
 
 start: configure-barong
 

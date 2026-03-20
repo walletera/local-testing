@@ -5,6 +5,9 @@ services:
     command: [ 'server', '-dev' ]
     ports:
       - "8200:8200"
+    volumes:
+      - "./barong-rails.hcl:/opt/barong-rails.hcl"
+      - "./barong-authz.hcl:/opt/barong-authz.hcl"
     environment:
       VAULT_TOKEN: "changeme"
       VAULT_DEV_ROOT_TOKEN_ID: "changeme"
