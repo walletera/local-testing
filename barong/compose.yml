@@ -2,7 +2,7 @@
 services:
   barong:
     container_name: barong
-    image: rubykube/barong:2.6.49
+    image: fedevmoya/barong:3.0.0
     ports:
       - "8051:8051"
     volumes:

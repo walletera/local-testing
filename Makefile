@@ -34,6 +34,7 @@ configure-barong: compose-up
 	$(DC) exec vault vault secrets disable secret
 	$(DC) exec vault vault secrets enable -path=secret -version=1 kv
 	$(DC) exec vault vault secrets enable totp
+	$(DC) exec vault vault secrets enable transit
 
 start: configure-barong
 

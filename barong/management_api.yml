@@ -1,12 +1,12 @@
 keychain:
-  service-accounts-seeder:
+  barong-cli:
     algorithm: RS256
-    value: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFyYk1FUk9weGo0Z2RudlJSWjNzdwpobFBJVUpweTVSbnVTM3g5Q3NWNHZKMWJMREo4YytZTkpXQjJrU1hsMVZlMEpleWJKTm82Smtra1NlVkcrdU9GCjJDcUhZeTRqRktzYlFlbnUvRThBSENKRzF5MVEyKzlTTUxNdWxtM1pCTUJTdzhyNytBcDBvQ096VkVLejZ0UDUKaFVhSEZxbDBORHVERnJPZWZ4YTlwVUV2eUpoWndBck85WlBmS2NMSUUyL1FSQk9XQUFhSDhjY201UkpZQTJvTAptbjZKWFhRMWF6Ynl5TWVyREhrNng5OFpoNHplaURiM3ozQ1JEUTl0eHZvSHBjTzdCemg5MzBkZFhKc280bDUwCnZpaGJQa2ttWHZMOGtNUFdndWgrLzVWU0Npa3ZPWG8yVlJIUlBwTzFFTi90ZmJYcHcrVyt3Tk45N0RnczVJWDIKWFFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
+    value: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFtZk1yVDQ1MzNIdXdrWVJFcHhzdgpWVjRwUnZKdHh6MzYrbXJ0NWtZd0R1L2hTMzBMUC9GL2dpeWVMYURlYXZCb0hpUmNsV3BUQUhTcmVRL2FWMXRMCnlPeHpzeVZSZ3d5QzU3YmZjMnJNTDNKTnM0Yi90VzY4NVNYYzEyUUt3VWlvVjRvZjR3ZnQvODluZ0NZMytkcFcKOHVzdUxWQUxTT0VIWVZrQ1A2RWlOZDJ5Q3gwNzlvOU1jTzF2Y05uRWI3a2cyNTBEd0dPaVJ3ZHR6V3ZxSXVsYwoxSy9XR203VGtyZ2JnaE9JZFpGcTdMOEw1c3g4c3cwNmc1VE8yYnVHNG52V1EvNHVEWll5NFh1cHAvV1ZSVVdFCkVoZmJneHRtNk1CdzhMRE5OK0FnVWxQUndnVkd1RHlVQUE3Sy9WRlBiUHRSME92NG15VVdVVnJ0MTF0NGE2c1gKQlFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
 jwt: {}
 scopes:
-  write_service_accounts:
-    permitted_signers: ['service-accounts-seeder']
-    mandatory_signers: ['service-accounts-seeder']
   read_service_accounts:
-    permitted_signers: [ 'service-accounts-seeder' ]
-    mandatory_signers: [ 'service-accounts-seeder' ]
+    permitted_signers: ['barong-cli']
+    mandatory_signers: ['barong-cli']
+  write_service_accounts:
+    permitted_signers: ['barong-cli']
+    mandatory_signers: ['barong-cli']

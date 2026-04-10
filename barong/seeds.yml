@@ -51,6 +51,7 @@ permissions:
   - { role: customer, verb: all, path: api/v1/auth/resource/otp/generate_qrcode, action: accept }
   - { role: customer, verb: all, path: api/v1/auth/resource/otp/enable, action: accept }
   - { role: customer, verb: all, path: api/v1/auth/resource/otp/disable, action: accept }
+  - { role: customer, verb: all, path: api/v1/auth/resource/service_accounts, action: accept }
   - { role: customer, verb: all, path: api/v1/auth/resource/service_accounts/api_keys, action: accept }
   # Payments
   - { role: customer, verb: post, path: api/v1/payments, action: accept }
