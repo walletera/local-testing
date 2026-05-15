@@ -1,0 +1,14 @@
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf"
+      - "./certs:/etc/nginx/certs:ro"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - envoy

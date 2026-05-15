@@ -6,6 +6,7 @@ include:
   - accounts/compose.yaml
   - dinopay-gateway/compose.yml
   - envoy/compose.yml
+  - nginx/compose.yml
   - mysql/compose.yml
   - vault/compose.yml
   - redis/compose.yml
