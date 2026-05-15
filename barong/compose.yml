@@ -2,7 +2,7 @@
 services:
   barong:
     container_name: barong
-    image: fedevmoya/barong:3.0.0
+    image: fedevmoya/barong:3.0.1
     ports:
       - "8051:8051"
     volumes:
@@ -35,9 +35,9 @@ services:
       SECRET_KEY_BASE: 64
       JWT_PRIVATE_KEY_PATH: "/secrets/barong.key"
       PORT: "8051"
-      BARONG_CAPTCHA: "recaptcha"
-      BARONG_RECAPTCHA_SECRET_KEY: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-      BARONG_RECAPTCHA_SITE_KEY: "xxxxxxxxxxxxxxxxxxxxxxxx"
+#      BARONG_CAPTCHA: "recaptcha"
+#      BARONG_RECAPTCHA_SECRET_KEY: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#      BARONG_RECAPTCHA_SITE_KEY: "xxxxxxxxxxxxxxxxxxxxxxxx"
       BARONG_REDIS_URL: "redis://redis:6379"
       BARONG_EVENT_API_JWT_ALGORITHM: "RS256"
       BARONG_EVENT_API_RABBITMQ_HOST: "rabbitmq"
