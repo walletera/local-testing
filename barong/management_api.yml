@@ -10,3 +10,15 @@ scopes:
   write_service_accounts:
     permitted_signers: ['barong-cli']
     mandatory_signers: ['barong-cli']
+  read_users:
+    permitted_signers: [ 'barong-cli' ]
+    mandatory_signers: [ 'barong-cli' ]
+  write_users:
+    permitted_signers: [ 'barong-cli' ]
+    mandatory_signers: [ 'barong-cli' ]
+  read_labels:
+    permitted_signers: [ 'barong-cli' ]
+    mandatory_signers: [ 'barong-cli' ]
+  write_labels:
+    permitted_signers: [ 'barong-cli' ]
+    mandatory_signers: [ 'barong-cli' ]

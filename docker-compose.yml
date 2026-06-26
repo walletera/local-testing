@@ -13,3 +13,4 @@ include:
   - barong/compose.yml
   - mongodb/compose.yml
   - payments-read-model/compose.yml
+  - barong-users-manager/compose.yml

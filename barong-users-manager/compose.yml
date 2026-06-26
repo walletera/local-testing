@@ -1,0 +1,25 @@
+services:
+  barong-users-manager:
+    container_name: "barong-users-manager"
+    build:
+      context: "${WALLETERA_DIR}/barong-users-manager/"
+      no_cache: true
+    develop:
+      watch:
+        - path: "${WALLETERA_DIR}/barong-users-manager/"
+          action: rebuild
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      barong:
+        condition: service_started
+    environment:
+      RABBITMQ_HOST: "rabbitmq"
+      RABBITMQ_PASSWORD: "guest"
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: "guest"
+      BARONG_MGMT_KEY_ID: "barong-cli"
+      BARONG_MGMT_PRIVATE_KEY_FILE: "/secrets/barong_management_api_priv_key.pem"
+      BARONG_URL: "http://barong:8051"
+    volumes:
+      - "./barong_management_api_priv_key.pem:/secrets/barong_management_api_priv_key.pem"
